@@ -1,0 +1,1 @@
+<p *ngFor="let option of question.options" class="option" [class.option--correct]="isTargetPlayerAnswer(option.id)"><span class="option__text">{{option.text}}</span><span class="option__answerers">{{getPlayerNamesAnswering(option.id)}}</span></p>

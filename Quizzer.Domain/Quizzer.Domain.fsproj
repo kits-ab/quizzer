@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Quizzer.Domain</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="IdObjectCollection.fs" />
+    <Compile Include="User.fs" />
+    <Compile Include="Option.fs" />
+    <Compile Include="Answer.fs" />
+    <Compile Include="Question.fs" />
+    <Compile Include="AnswerEventData.fs" />
+    <Compile Include="AnswerEvent.fs" />
+    <Compile Include="Game.fs" />
+    <Compile Include="Library.fs" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+.option--correct .option__text {
+  color: green;
+  text-decoration: underline;
+}
+
+.option__answerers:not(:empty)::before {
+  content: '(';
+}
+
+.option__answerers:not(:empty)::after {
+  content: ')';
+}

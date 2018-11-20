@@ -1,0 +1,5 @@
+<p>
+  {{targetPlayerName}}: {{question.text}}
+</p>
+<app-single-answer-answered-question *ngIf="isSingleAnswer()" [question]="question"></app-single-answer-answered-question>
+<app-multiple-answer-answered-question *ngIf="isMultipleAnswer()" [question]="question"></app-multiple-answer-answered-question>
