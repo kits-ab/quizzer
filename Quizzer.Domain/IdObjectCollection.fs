@@ -4,4 +4,4 @@ type IdObjectCollection<'Id, 'Object when 'Id : comparison and 'Object : compari
 
 module IdObjectCollection =
     let Ids idObjectCollection = 
-        Map.fold (fun keys key _ -> key::keys) [] idObjectCollection
+        Seq.map (fun (id, _) -> id) (Map.toSeq idObjectCollection)

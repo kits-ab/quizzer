@@ -4,6 +4,8 @@ import { SingleAnswerAnsweredQuestion, SingleAnswerQuestionAnswer } from '../sin
 import { MultipleAnswerAnsweredQuestion, MultipleAnswerQuestionAnswer } from '../multiple-answer-answered-question/multiple-answer-answered-question.component';
 import { PlayerService } from '../player.service';
 import { Option } from '../option';
+import { QuestionService } from '../question.service';
+
 
 @Component({
   selector: 'app-game',
@@ -11,13 +13,16 @@ import { Option } from '../option';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-    
+
   currentQuestion: Question;
 
-  constructor(private playerService: PlayerService) {}
+  constructor(readonly playerService: PlayerService, readonly questionService: QuestionService) { }
 
   ngOnInit(): void {
     this.currentQuestion = new ActiveQuestion(this.playerService.getPlayer("1337").name, "What is my favorite color?");
+    this.questionService.onNewQuestion((question) => {
+      this.currentQuestion = new ActiveQuestion(this.playerService.getPlayer("1337").name, question.tamp);
+    });
   }
 
   tempMock() {
@@ -33,6 +38,10 @@ export class GameComponent implements OnInit {
         [new Option("Blue", "2"), new Option("Green", "1"), new Option("Red", "0")],
         [new MultipleAnswerQuestionAnswer(["1", "2"], "1337"), new MultipleAnswerQuestionAnswer(["2", "0"], "1338")]);
     }
+  }
+
+  tempProvideAnswer() {
+    this.questionService.tempProvideAnswer();
   }
 
   isActiveQuestion(): boolean {

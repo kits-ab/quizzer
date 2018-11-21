@@ -28,6 +28,7 @@
     <None Remove="ClientApp\src\app\game\answer.ts" />
     <None Remove="ClientApp\src\app\game\answered-question.ts" />
     <None Remove="ClientApp\src\app\game\option.ts" />
+    <None Remove="ClientApp\src\app\game\question.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +43,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\game\answer.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\game\answered-question.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\game\option.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\game\question.service.ts" />
   </ItemGroup>
 
   <ItemGroup>

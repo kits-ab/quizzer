@@ -12,12 +12,19 @@
 
   <ItemGroup>
     <Compile Include="IdObjectCollection.fs" />
-    <Compile Include="User.fs" />
+    <Compile Include="IdTypes.fs" />
+    <Compile Include="DomainTypes.fs" />
     <Compile Include="Option.fs" />
     <Compile Include="Answer.fs" />
+    <Compile Include="SingleAnswerQuestion.fs" />
+    <Compile Include="MultipleAnswerQuestion.fs" />
     <Compile Include="Question.fs" />
     <Compile Include="AnswerEventData.fs" />
-    <Compile Include="AnswerEvent.fs" />
+    <Compile Include="GameEvents\GameCreatedEvent.fs" />
+    <Compile Include="GameEvents\QuestionAddedEvent.fs" />
+    <Compile Include="GameEvents\PlayerJoinedEvent.fs" />
+    <Compile Include="GameEvents\PlayerLeftEvent.fs" />
+    <Compile Include="GameEvents\AnswerEvent.fs" />
     <Compile Include="Game.fs" />
     <Compile Include="Library.fs" />
   </ItemGroup>

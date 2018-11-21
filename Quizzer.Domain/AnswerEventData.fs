@@ -2,7 +2,7 @@
 
 type SingleAnswerQuestionAnswerEventData = { OptionId : OptionId }
 
-type MultipleAnswerQuestionAnswerEventData = { OptionIds : List<OptionId> }
+type MultipleAnswerQuestionAnswerEventData = { OptionIds : seq<OptionId> }
 
 type AnswerEventData =
     | SingleAnswerQuestionAnswerEventData of SingleAnswerQuestionAnswerEventData
@@ -11,5 +11,5 @@ type AnswerEventData =
 module AnswerEventData =
     let create answer =
         match (answer) with
-            | SingleAnswerQuestionAnswer optionId -> SingleAnswerQuestionAnswerEventData({ OptionId = optionId })
-            | MultipleAnswerQuestionAnswer optionIds -> MultipleAnswerQuestionAnswerEventData({ OptionIds = optionIds })
+            | SingleAnswer singleAnswer -> SingleAnswerQuestionAnswerEventData({ OptionId = singleAnswer.OptionId })
+            | MultipleAnswer multipleAnswer -> MultipleAnswerQuestionAnswerEventData({ OptionIds = multipleAnswer.OptionIds })
