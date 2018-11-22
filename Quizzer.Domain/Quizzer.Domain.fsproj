@@ -21,11 +21,12 @@
     <Compile Include="Question.fs" />
     <Compile Include="AnswerEventData.fs" />
     <Compile Include="GameEvents\GameCreatedEvent.fs" />
-    <Compile Include="GameEvents\QuestionAddedEvent.fs" />
     <Compile Include="GameEvents\PlayerJoinedEvent.fs" />
     <Compile Include="GameEvents\PlayerLeftEvent.fs" />
     <Compile Include="GameEvents\AnswerEvent.fs" />
+    <Compile Include="GameEvent.fs" />
     <Compile Include="Game.fs" />
+    <Compile Include="GameBuilder.fs" />
     <Compile Include="Library.fs" />
   </ItemGroup>
 

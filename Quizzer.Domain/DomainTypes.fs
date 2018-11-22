@@ -18,11 +18,11 @@ module DomainTypes =
     | MultipleAnswer of MultipleAnswer
 
     type SingleAnswerQuestion = {
-        Question : string
+        Text : string
         Options : OptionCollection }
 
     type MultipleAnswerQuestion = {
-        Question : string
+        Text : string
         Options : OptionCollection }
 
     type Question =
@@ -32,6 +32,5 @@ module DomainTypes =
     type QuestionCollection = IdObjectCollection<QuestionId, Question>
 
     type Game = {
-        Id : GameId
         Questions : QuestionCollection
         CurrentQuestionId : QuestionId }

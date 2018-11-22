@@ -4,7 +4,7 @@ open System
 
 module SingleAnswerQuestion =
     let create (questionText, optionTexts) = SingleAnswerQuestion {
-        Question = questionText
+        Text = questionText
         Options = Map.ofSeq (Seq.map (fun optionText -> (OptionId(Guid.NewGuid()), { Text = optionText })) optionTexts)
     }
 

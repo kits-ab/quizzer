@@ -19,22 +19,27 @@ export class GameComponent implements OnInit {
   constructor(readonly playerService: PlayerService, readonly questionService: QuestionService) { }
 
   ngOnInit(): void {
-    this.currentQuestion = new ActiveQuestion(this.playerService.getPlayer("1337").name, "What is my favorite color?");
+    this.currentQuestion = new ActiveQuestion(this.playerService.getPlayer("1337").name, "What is my favorite color?C");
+
     this.questionService.onNewQuestion((question) => {
-      this.currentQuestion = new ActiveQuestion(this.playerService.getPlayer("1337").name, question.tamp);
+      this.currentQuestion = question;
+    });
+
+    this.questionService.onQuestionAnswered((answeredQuestion) => {
+      this.currentQuestion = answeredQuestion;
     });
   }
 
   tempMock() {
     if (this.currentQuestion instanceof ActiveQuestion) {
       this.currentQuestion = new SingleAnswerAnsweredQuestion("1337",
-        "Still same text?",
+        "Still same text?C",
         [new Option("Blue", "2"), new Option("Green", "1")],
         [new SingleAnswerQuestionAnswer("1", "1337"), new SingleAnswerQuestionAnswer("2", "1338")]);
     }
     else if (this.currentQuestion instanceof SingleAnswerAnsweredQuestion) {
       this.currentQuestion = new MultipleAnswerAnsweredQuestion("1337",
-        "Still same text?",
+        "Still same text?C",
         [new Option("Blue", "2"), new Option("Green", "1"), new Option("Red", "0")],
         [new MultipleAnswerQuestionAnswer(["1", "2"], "1337"), new MultipleAnswerQuestionAnswer(["2", "0"], "1338")]);
     }
@@ -42,6 +47,10 @@ export class GameComponent implements OnInit {
 
   tempProvideAnswer() {
     this.questionService.tempProvideAnswer();
+  }
+
+  tempJoin() {
+    this.questionService.tempJoin();
   }
 
   isActiveQuestion(): boolean {
