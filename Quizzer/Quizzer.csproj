@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -25,10 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\client\client.service.ts" />
+    <None Remove="ClientApp\src\app\common\IdTypes.ts" />
     <None Remove="ClientApp\src\app\game\answer.ts" />
     <None Remove="ClientApp\src\app\game\answered-question.ts" />
+    <None Remove="ClientApp\src\app\game\game.service.ts" />
     <None Remove="ClientApp\src\app\game\option.ts" />
-    <None Remove="ClientApp\src\app\game\question.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,19 +38,29 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\client\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\client\client.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\IdTypes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\game\answer.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\game\answered-question.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\game\option.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\game\question.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\game\game.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ClientApp\src\app\game\answered-question.js">
-      <DependentUpon>answered-question.ts</DependentUpon>
+    <None Update="ClientApp\src\app\client\states\NotEnoughPlayers.ts">
+      <CustomToolNamespace>Services\Client\States\NotEnoughPlayers.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\game\states\ActiveQuestion.ts">
+      <CustomToolNamespace>Services\Game\States\ActiveQuestion.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\game\states\MultipleAnswerAnsweredQuestion.ts">
+      <CustomToolNamespace>Services\Game\States\MultipleAnswerAnsweredQuestion.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\game\states\NotEnoughPlayers.ts">
+      <CustomToolNamespace>Services\Game\States\NotEnoughPlayers.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\game\states\SingleAnswerAnsweredQuestion.ts">
+      <CustomToolNamespace>Services\Game\States\SingleAnswerAnsweredQuestion.cs</CustomToolNamespace>
     </None>
   </ItemGroup>
 

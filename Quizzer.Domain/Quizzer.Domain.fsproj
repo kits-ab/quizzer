@@ -20,7 +20,7 @@
     <Compile Include="MultipleAnswerQuestion.fs" />
     <Compile Include="Question.fs" />
     <Compile Include="AnswerEventData.fs" />
-    <Compile Include="GameEvents\GameCreatedEvent.fs" />
+    <Compile Include="GameEvents\AddQuestionsEvent.fs" />
     <Compile Include="GameEvents\PlayerJoinedEvent.fs" />
     <Compile Include="GameEvents\PlayerLeftEvent.fs" />
     <Compile Include="GameEvents\AnswerEvent.fs" />

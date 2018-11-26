@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { AnsweredQuestion } from '../answered-question';
 import { Answer } from '../answer';
-import { PlayerService, PlayerId } from '../player.service';
-import { OptionId, Option } from '../option';
+import { PlayerService } from '../player.service';
+import { Option } from '../option';
+import { OptionId, PlayerId } from "../../common/IdTypes";
 
 @Component({
   selector: 'app-multiple-answer-answered-question',

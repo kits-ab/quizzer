@@ -4,7 +4,8 @@ import { SingleAnswerAnsweredQuestion, SingleAnswerQuestionAnswer } from '../sin
 import { MultipleAnswerAnsweredQuestion, MultipleAnswerQuestionAnswer } from '../multiple-answer-answered-question/multiple-answer-answered-question.component';
 import { PlayerService } from '../player.service';
 import { Option } from '../option';
-import { QuestionService } from '../question.service';
+import { GameService } from '../game.service';
+import { GameId } from 'app/common/IdTypes';
 
 
 @Component({
@@ -14,56 +15,86 @@ import { QuestionService } from '../question.service';
 })
 export class GameComponent implements OnInit {
 
-  currentQuestion: Question;
+  gameId: GameId;
+  currentState: GameState;
 
-  constructor(readonly playerService: PlayerService, readonly questionService: QuestionService) { }
+  constructor(readonly playerService: PlayerService, readonly gameService: GameService) { }
 
   ngOnInit(): void {
-    this.currentQuestion = new ActiveQuestion(this.playerService.getPlayer("1337").name, "What is my favorite color?C");
+    this.currentState = new ActiveQuestion(this.playerService.getPlayer("1337").name, "What is my favorite color?C");
 
-    this.questionService.onNewQuestion((question) => {
-      this.currentQuestion = question;
-    });
-
-    this.questionService.onQuestionAnswered((answeredQuestion) => {
-      this.currentQuestion = answeredQuestion;
+    this.gameService.onNewState((newState) => {
+      if (newState.type === "NotEnoughPlayers") {
+        this.currentState = new NotEnoughPlayers(newState.numberOfMorePlayersRequired);
+      }
+      else if (newState.type === "ActiveQuestion") {
+        this.currentState = new ActiveQuestion(
+          this.playerService.getPlayer(newState.targetPlayerId).name,
+          newState.text);
+      }
+      else if (newState.type === "SingleAnswerAnsweredQuestion") {
+        this.currentState = new SingleAnswerAnsweredQuestion(
+          newState.targetPlayerId,
+          newState.text,
+          newState.options.map(option => new Option(option.text, option.id)),
+          newState.answers.map(answer => new SingleAnswerQuestionAnswer(answer.optionId, answer.playerId))
+        );
+      }
+      else if (newState.type === "MultipleAnswerAnsweredQuestion") {
+        this.currentState = new MultipleAnswerAnsweredQuestion(
+          newState.targetPlayerId,
+          newState.text,
+          newState.options.map(option => new Option(option.text, option.id)),
+          newState.answers.map(answer => new MultipleAnswerQuestionAnswer(answer.optionIds, answer.playerId))
+        );
+      }
     });
   }
 
   tempMock() {
-    if (this.currentQuestion instanceof ActiveQuestion) {
-      this.currentQuestion = new SingleAnswerAnsweredQuestion("1337",
+    if (this.currentState instanceof ActiveQuestion) {
+      this.currentState = new SingleAnswerAnsweredQuestion("1337",
         "Still same text?C",
         [new Option("Blue", "2"), new Option("Green", "1")],
         [new SingleAnswerQuestionAnswer("1", "1337"), new SingleAnswerQuestionAnswer("2", "1338")]);
     }
-    else if (this.currentQuestion instanceof SingleAnswerAnsweredQuestion) {
-      this.currentQuestion = new MultipleAnswerAnsweredQuestion("1337",
+    else if (this.currentState instanceof SingleAnswerAnsweredQuestion) {
+      this.currentState = new MultipleAnswerAnsweredQuestion("1337",
         "Still same text?C",
         [new Option("Blue", "2"), new Option("Green", "1"), new Option("Red", "0")],
         [new MultipleAnswerQuestionAnswer(["1", "2"], "1337"), new MultipleAnswerQuestionAnswer(["2", "0"], "1338")]);
     }
   }
 
-  tempProvideAnswer() {
-    this.questionService.tempProvideAnswer();
+  hasGameId(): boolean {
+    return this.gameId != null;
   }
 
-  tempJoin() {
-    this.questionService.tempJoin();
+  create(): void {
+    this.gameService.create((newGameId) => {
+      this.gameId = newGameId;
+    });
+  }
+
+  isNotEnoughPlayers(): boolean {
+    return this.currentState instanceof NotEnoughPlayers;
   }
 
   isActiveQuestion(): boolean {
-    return this.currentQuestion instanceof ActiveQuestion;
+    return this.currentState instanceof ActiveQuestion;
   }
 
   isAnsweredQuestion(): boolean {
-    return this.currentQuestion instanceof AnsweredQuestion;
+    return this.currentState instanceof AnsweredQuestion;
   }
 }
 
-type Question = ActiveQuestion | AnsweredQuestion;
+type GameState = NotEnoughPlayers | ActiveQuestion | AnsweredQuestion;
 
 export class ActiveQuestion {
   constructor(readonly targetPlayerName: string, readonly text: string) {}
+}
+
+class NotEnoughPlayers {
+  constructor(readonly numberOfMorePlayersRequired: number) {}
 }

@@ -1,7 +1,10 @@
-<app-question *ngIf="isActiveQuestion()" [targetPlayerName]="currentQuestion.targetPlayerName" [text]="currentQuestion.text"></app-question>
+<div *ngIf="hasGameId()">Game ID: {{gameId}}</div>
 
-<app-answered-question *ngIf="isAnsweredQuestion()" [question]="currentQuestion"></app-answered-question>
+<div *ngIf="isNotEnoughPlayers()">Waiting for {{currentState.numberOfMorePlayersRequired}} more players...</div>
+
+<app-question *ngIf="isActiveQuestion()" [targetPlayerName]="currentState.targetPlayerName" [text]="currentState.text"></app-question>
+
+<app-answered-question *ngIf="isAnsweredQuestion()" [question]="currentState"></app-answered-question>
 
 <button (click)="tempMock()">Tamp mock</button>
-<button (click)="tempProvideAnswer()">Tamp provide</button>
-<button (click)="tempJoin()">Tamp join</button>
+<button *ngIf="!hasGameId()" (click)="create()">Create game</button>

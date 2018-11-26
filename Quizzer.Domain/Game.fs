@@ -3,11 +3,11 @@
 open System
 
 module Game =
-    let currentQuestion (game : Game) = game.Questions.TryFind game.CurrentQuestionId
+    let currentQuestion game = game.Questions.TryFind game.CurrentQuestionId
 
-    let create questions = {
-        GameId = GameId(Guid.Empty)//GameId(Guid.NewGuid())
-        Questions = questions }
+    let addQuestion question = AddQuestionEvent {
+        QuestionId = QuestionId(Guid.NewGuid())
+        Question = question }
 
     let join (newPlayerName) = PlayerJoinedEvent { 
         PlayerId = PlayerId(Guid.NewGuid())

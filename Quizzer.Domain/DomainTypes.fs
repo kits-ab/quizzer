@@ -31,6 +31,11 @@ module DomainTypes =
 
     type QuestionCollection = IdObjectCollection<QuestionId, Question>
 
+    type Player = { Name : string }
+
+    type PlayerCollection = IdObjectCollection<PlayerId, Player>
+
     type Game = {
         Questions : QuestionCollection
-        CurrentQuestionId : QuestionId }
+        CurrentQuestionId : QuestionId
+        Players : PlayerCollection }

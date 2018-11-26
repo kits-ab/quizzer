@@ -1,18 +1,30 @@
 ﻿namespace Quizzer.Domain
 
-open System
-
 module GameBuilder =
-    let private createQuestionCollection (questions : seq<Question>) = Map.ofSeq (Seq.map (fun question -> (QuestionId(Guid.NewGuid()), question)) questions)
+    let private addQuestion (game, newQuestionId, newQuestion) = 
+        match game with
+        | Some existingGame -> {
+            existingGame with
+                Questions = existingGame.Questions.Add(newQuestionId, newQuestion) }
+        | None -> {
+            Questions = QuestionCollection(Seq.singleton (newQuestionId, newQuestion))
+            CurrentQuestionId = newQuestionId
+            Players = PlayerCollection(Seq.empty)}
 
-    let private createGame questionCollection = {
-        Questions = questionCollection
-        CurrentQuestionId = Seq.head (IdObjectCollection.Ids questionCollection) }
+    let private addPlayer (game, newPlayerId, newPlayerName) = {
+        game with
+            Players = game.Players.Add(newPlayerId, { Name = newPlayerName })
+    }
 
-    let build (event : GameCreatedEvent) = createGame (createQuestionCollection event.Questions)
+    let private removePlayer (game, playerId) = {
+        game with
+            Players = game.Players.Remove(playerId)
+    }
 
     let apply (game, event) =
-        match event with
-        | PlayerJoinedEvent playerJoinedEvent -> game
-        | PlayerLeftEvent playerLeftEvent -> game
-        | AnswerEvent answerEvent -> game
+        match game, event with
+        | _, AddQuestionEvent addQuestionEvent -> addQuestion (game, addQuestionEvent.QuestionId, addQuestionEvent.Question)
+        | None, _ -> failwith "Game must be initiated with add question event"
+        | Some game, PlayerJoinedEvent playerJoinedEvent -> addPlayer (game, playerJoinedEvent.PlayerId, playerJoinedEvent.PlayerName)
+        | Some game, PlayerLeftEvent playerLeftEvent -> removePlayer (game, playerLeftEvent.PlayerId)
+        | Some game, AnswerEvent answerEvent -> game

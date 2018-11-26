@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.DependencyInjection;
 using Quizzer.Hubs;
+using Quizzer.Services;
+using Quizzer.Services.Client;
+using Quizzer.Services.Game;
 
 namespace Quizzer
 {
@@ -21,7 +24,11 @@ namespace Quizzer
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddSingleton<GameHandler, GameHandler>();
+            services.AddTransient<GameBuilder>();
+            services.AddTransient<GameRepository>();
+            services.AddTransient<GameStateDenormalizer>();
+            services.AddTransient<ClientStateDenormalizer>();
+            services.AddSingleton<EventStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +49,10 @@ namespace Quizzer
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseSignalR(options => { options.MapHub<GameHub>("/hub"); });
+            app.UseSignalR(options =>
+            {
+                options.MapHub<GameHub>("/hub");
+            });
 
             app.UseMvc(routes =>
             {

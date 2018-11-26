@@ -7,7 +7,7 @@ import { AnsweredQuestionComponent } from './answered-question/answered-question
 import { PlayerService } from './player.service';
 import { SingleAnswerAnsweredQuestionComponent } from './single-answer-answered-question/single-answer-answered-question.component';
 import { MultipleAnswerAnsweredQuestionComponent } from './multiple-answer-answered-question/multiple-answer-answered-question.component';
-import { QuestionService } from './question.service';
+import { GameService } from './game.service';
 
 @NgModule({
   declarations: [
@@ -20,9 +20,12 @@ import { QuestionService } from './question.service';
   imports: [
     CommonModule
   ],
+  exports: [
+    GameComponent
+  ],
   providers: [
     PlayerService,
-    QuestionService
+    GameService
   ]
 })
 export class GameModule { }

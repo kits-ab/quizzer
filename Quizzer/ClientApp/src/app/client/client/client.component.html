@@ -1,0 +1,5 @@
+<div *ngIf="hasPlayerId()">Player ID: {{playerId}}</div>
+
+<button *ngIf="isJoinGame()" (click)="joinLatestGame()">Join {{state.availableGameId}}</button>
+
+<div *ngIf="isNotEnoughPlayers()">Waiting for more players to join...</div>
