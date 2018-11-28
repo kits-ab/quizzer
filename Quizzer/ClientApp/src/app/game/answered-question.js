@@ -2,10 +2,10 @@ define(["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var AnsweredQuestion = /** @class */ (function () {
-        function AnsweredQuestion(targetPlayerId, text, answers) {
-            this.targetPlayerId = targetPlayerId;
+        function AnsweredQuestion(targetPlayerName, text, otherPlayerAnswers) {
+            this.targetPlayerName = targetPlayerName;
             this.text = text;
-            this.answers = answers;
+            this.otherPlayerAnswers = otherPlayerAnswers;
         }
         return AnsweredQuestion;
     }());

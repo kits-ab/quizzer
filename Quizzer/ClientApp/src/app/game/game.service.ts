@@ -3,9 +3,9 @@ import * as signalR from "@aspnet/signalr";
 import { ActiveQuestion } from './states/ActiveQuestion';
 import { SingleAnswerAnsweredQuestion } from './states/SingleAnswerAnsweredQuestion';
 import { MultipleAnswerAnsweredQuestion } from './states/MultipleAnswerAnsweredQuestion';
-import { GameId } from 'app/common/IdTypes';
 import { NotEnoughPlayers } from './states/NotEnoughPlayers';
-import { ClientComponent } from 'app/client/client/client.component';
+import { GameId } from '../common/IdTypes';
+import { ClientComponent } from '../client/client/client.component';
 
 @Injectable()
 export class GameService {

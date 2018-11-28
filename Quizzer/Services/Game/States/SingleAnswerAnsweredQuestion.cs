@@ -5,30 +5,32 @@ namespace Quizzer.Services.Game.States
 {
     public class SingleAnswerAnsweredQuestion : State
     {
-        public SingleAnswerAnsweredQuestion(Guid targetPlayerId, string text, IEnumerable<Option> options, IEnumerable<Answer> answers)
+        public SingleAnswerAnsweredQuestion(string targetPlayerName, Guid targetPlayerAnswerOptionId, string text, IEnumerable<Option> options, IEnumerable<Answer> otherPlayerAnswers)
         {
-            TargetPlayerId = targetPlayerId;
+            TargetPlayerName = targetPlayerName;
+            TargetPlayerAnswerOptionId = targetPlayerAnswerOptionId;
             Text = text;
             Options = options;
-            Answers = answers;
+            OtherPlayerAnswers = otherPlayerAnswers;
         }
 
-        public Guid TargetPlayerId { get; }
+        public string TargetPlayerName { get; }
+        public Guid TargetPlayerAnswerOptionId { get; }
     
         public string Text { get; }
         public IEnumerable<Option> Options { get; }
-        public IEnumerable<Answer> Answers { get; }
+        public IEnumerable<Answer> OtherPlayerAnswers { get; }
 
         public class Option
         {
-            public Option(string text, Guid id)
+            public Option(Guid id, string text)
             {
-                Text = text;
                 Id = id;
+                Text = text;
             }
 
-            public string Text { get; }
             public Guid Id { get; }
+            public string Text { get; }
         }
 
         public class Answer

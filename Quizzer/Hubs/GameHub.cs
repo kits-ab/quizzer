@@ -31,7 +31,9 @@ namespace Quizzer.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, GameGroupName);
             var gameId = GameId.NewGameId(Guid.NewGuid());
             eventStore.Add(gameId, Game.addQuestion(SingleAnswerQuestion.create("What is my favorite color?", new[] { "Red", "Green", "Blue" })));
-            eventStore.Add(gameId, Game.addQuestion(MultipleAnswerQuestion.create("What is my favorite color?", new[] { "Red", "Green", "Blue", "Yellow" })));
+            eventStore.Add(gameId, Game.addQuestion(SingleAnswerQuestion.create("Am I blue?", new[] { "Yes", "No" })));
+            eventStore.Add(gameId, Game.addQuestion(SingleAnswerQuestion.create("Question?", new[] { "Yes", "No" })));
+            eventStore.Add(gameId, Game.addQuestion(MultipleAnswerQuestion.create("What are my favorite colors?", new[] { "Red", "Green", "Blue", "Yellow" })));
             await Clients.All.SendAsync("newGame", gameId.Item);
             await SendNewState(gameId);
         }

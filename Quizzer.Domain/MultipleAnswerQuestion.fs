@@ -9,4 +9,4 @@ module MultipleAnswerQuestion =
     }
 
     let isValidAnswer (question : MultipleAnswerQuestion, answer : MultipleAnswer) =
-        Seq.forall (fun x -> Seq.contains x (IdObjectCollection.Ids question.Options)) answer.OptionIds
+        Seq.forall (fun x -> Seq.contains x (Map.keys question.Options)) answer.OptionIds

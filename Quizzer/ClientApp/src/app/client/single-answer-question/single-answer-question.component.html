@@ -1,0 +1,1 @@
+<button type="button" class="option" *ngFor="let option of question.options" (click)="answer(option.id)" [class.option--current]="isCurrentAnswer(option.id)">{{option.text}}</button>

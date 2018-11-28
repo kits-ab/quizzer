@@ -32,15 +32,17 @@ import { ClientComponent } from './client/client/client.component';
     ClientModule,
     RouterModule.forRoot([
       { path: '', component: GameTestComponent, pathMatch: 'full' },
+      { path: 'game', component: GameComponent },
+      { path: 'client', component: ClientComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
   bootstrap: [
-    //AppComponent,
+    AppComponent,
     //GameTestComponent,
-    GameComponent,
-    ClientComponent
+    //GameComponent,
+    //ClientComponent
   ]
 })
 export class AppModule { }

@@ -5,8 +5,6 @@ module DomainTypes =
 
     type Option = { Text : string }
 
-    type OptionCollection = IdObjectCollection<OptionId, Option>
-
     type SingleAnswer = {
         OptionId : OptionId }
 
@@ -19,23 +17,21 @@ module DomainTypes =
 
     type SingleAnswerQuestion = {
         Text : string
-        Options : OptionCollection }
+        Options : Map<OptionId, Option> }
 
     type MultipleAnswerQuestion = {
         Text : string
-        Options : OptionCollection }
+        Options : Map<OptionId, Option> }
 
     type Question =
     | SingleAnswerQuestion of SingleAnswerQuestion
     | MultipleAnswerQuestion of MultipleAnswerQuestion
 
-    type QuestionCollection = IdObjectCollection<QuestionId, Question>
-
     type Player = { Name : string }
 
-    type PlayerCollection = IdObjectCollection<PlayerId, Player>
-
     type Game = {
-        Questions : QuestionCollection
-        CurrentQuestionId : QuestionId
-        Players : PlayerCollection }
+        Questions : seq<QuestionId * Question>
+        CurrentQuestionId : Option<QuestionId>
+        CurrentQuestionAnswers : Map<PlayerId, Answer>
+        Players : Map<PlayerId, Player>
+        TargetPlayerId : Option<PlayerId> }

@@ -9,4 +9,4 @@ module SingleAnswerQuestion =
     }
 
     let isValidAnswer (question : SingleAnswerQuestion, answer : SingleAnswer) =
-        Seq.contains answer.OptionId (IdObjectCollection.Ids question.Options)
+        Seq.contains answer.OptionId (Map.keys question.Options)

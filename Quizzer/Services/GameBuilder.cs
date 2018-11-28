@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Microsoft.FSharp.Core;
 using Quizzer.Domain;
 
 namespace Quizzer.Services
@@ -10,15 +9,16 @@ namespace Quizzer.Services
 
         public GameBuilder(IEnumerable<GameEvent> events)
         {
+            Game = Domain.Game.create;
             foreach (var @event in events)
             {
                 Handle(@event);
             }
         }
 
-        public void Handle(GameEvent @event)
+        private void Handle(GameEvent @event)
         {
-            Game = Domain.GameBuilder.apply(Game ?? FSharpOption<DomainTypes.Game>.None, @event);
+            Game = Domain.GameBuilder.apply(Game, @event);
         }
     }
 }

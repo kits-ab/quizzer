@@ -4,13 +4,13 @@ namespace Quizzer.Services.Game.States
 {
     public class ActiveQuestion : State
     {
-        public ActiveQuestion(Guid targetPlayerId, string text)
+        public ActiveQuestion(string targetPlayerName, string text)
         {
-            TargetPlayerId = targetPlayerId;
+            TargetPlayerName = targetPlayerName;
             Text = text;
         }
 
-        public Guid TargetPlayerId { get; }
+        public string TargetPlayerName { get; }
         public string Text { get; }
     }
 }

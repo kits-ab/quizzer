@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AnsweredQuestion } from '../answered-question';
 import { Answer } from '../answer';
-import { PlayerService } from '../player.service';
-import { Option } from '../option';
+import { Option } from '../../common/Option';
 import { OptionId, PlayerId } from '../../common/IdTypes';
 
 @Component({
@@ -15,40 +14,36 @@ export class SingleAnswerAnsweredQuestionComponent {
   @Input()
   question: SingleAnswerAnsweredQuestion;
 
-  constructor(readonly playerService: PlayerService) { }
+  constructor() { }
 
   getPlayerNamesAnswering(optionId: OptionId): string {
-    const playerIds = this.question.answers
-      .filter(answer => answer.optionId === optionId && answer.playerId != this.question.targetPlayerId)
-      .map(x => x.playerId);
-
-    const playerNames = playerIds
-      .map(playerId => this.playerService.getPlayer(playerId))
-      .map(player => player.name);
+    const playerNames = this.question.otherPlayerAnswers
+      .filter(answer => answer.optionId === optionId)
+      .map(x => x.playerName);
 
     return playerNames.join(", ");
   }
 
   isTargetPlayerAnswer(optionId: OptionId): boolean {
-    const optionIsTargetPlayersAnswer = this.question.answers
-      .some(answer => answer.playerId === this.question.targetPlayerId && answer.optionId === optionId);
+    const optionIsTargetPlayersAnswer = optionId === this.question.targetPlayerAnswer;
 
     return optionIsTargetPlayersAnswer;
   }
 }
 
 export class SingleAnswerQuestionAnswer extends Answer {
-  constructor(readonly optionId: OptionId, readonly playerId: PlayerId) {
-    super(playerId);
+  constructor(readonly optionId: OptionId, readonly playerName: string) {
+    super(playerName);
   }
 }
 
 export class SingleAnswerAnsweredQuestion extends AnsweredQuestion {
   constructor(
-    readonly targetPlayerId: PlayerId,
+    readonly targetPlayerName: string,
+    readonly targetPlayerAnswer: OptionId,
     readonly text: string,
     readonly options: Option[],
-    readonly answers: SingleAnswerQuestionAnswer[]) {
-    super(targetPlayerId, text, answers);
+    readonly otherPlayerAnswers: SingleAnswerQuestionAnswer[]) {
+    super(targetPlayerName, text, otherPlayerAnswers);
   }
 }

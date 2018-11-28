@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="IdObjectCollection.fs" />
+    <Compile Include="MapExtensions.fs" />
     <Compile Include="IdTypes.fs" />
     <Compile Include="DomainTypes.fs" />
     <Compile Include="Option.fs" />

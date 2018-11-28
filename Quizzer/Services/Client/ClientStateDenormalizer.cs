@@ -1,5 +1,7 @@
-﻿using Quizzer.Domain;
+﻿using System.Linq;
+using Quizzer.Domain;
 using Quizzer.Services.Client.States;
+using SingleAnswerQuestion = Quizzer.Services.Client.States.SingleAnswerQuestion;
 
 namespace Quizzer.Services.Client
 {
@@ -15,10 +17,18 @@ namespace Quizzer.Services.Client
         public object GetState(GameId gameId)
         {
             var game = gameRepository.GetById(gameId);
-            var numberOfPlayers = game.Players.Count;
-            if (numberOfPlayers < 2)
+            var acceptsAnswersResult = Domain.Game.isAcceptingAnswers(game);
+            if (acceptsAnswersResult.IsNotEnoughPlayers)
             {
                 return new NotEnoughPlayers();
+            }
+
+            var question = Domain.Game.currentQuestion(game).Value;
+            if (question.IsSingleAnswerQuestion)
+            {
+                var singleQuestion = ((DomainTypes.Question.SingleAnswerQuestion) question).Item;
+
+                return new SingleAnswerQuestion(singleQuestion.Options.Select(pair => new SingleAnswerQuestion.Option(pair.Key.Item, pair.Value.Text)));
             }
 
             return null;

@@ -2,10 +2,11 @@
 export interface MultipleAnswerAnsweredQuestion {
   type: 'MultipleAnswerAnsweredQuestion';
   
-  targetPlayerId: string;
+  targetPlayerName: string;
+  targetPlayerAnswerOptionIds: string[];
   text: string;
   options: Option[];
-  answers: Answer[];
+  otherPlayerAnswers: Answer[];
 }
 
 interface Option {

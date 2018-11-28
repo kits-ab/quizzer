@@ -5,11 +5,12 @@ namespace Quizzer.Services.Game.States
 {
     public class MultipleAnswerAnsweredQuestion : State
     {
-        public Guid TargetPlayerId { get; set; }
+        public Guid TargetPlayerName { get; set; }
+        public IEnumerable<Guid> TargetPlayerAnswerOptionIds { get; }
 
         public string Text { get; set; }
         public IEnumerable<Option> Options { get; set; }
-        public IEnumerable<Answer> Answers { get; set; }
+        public IEnumerable<Answer> OtherPlayerAnswers { get; set; }
 
         public class Option
         {

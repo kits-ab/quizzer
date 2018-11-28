@@ -1,36 +1,67 @@
-import { Component, OnInit } from '@angular/core';
-import { GameId, PlayerId } from 'app/common/IdTypes';
-import { ClientService } from '../client.service';
+import { Component } from '@angular/core';
+import { HubConnection, HubConnectionBuilder } from "@aspnet/signalr";
+import { GameId, PlayerId, OptionId } from "../../common/IdTypes";
+import { ClientState as ClientStateContract } from "../ClientState";
+import { SingleAnswerQuestion, SingleAnswerQuestionAnswer } from '../single-answer-question/single-answer-question.component';
+import { Option } from '../../common/Option';
 
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.css']
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent {
 
   static availableGameId: GameId;
 
+  private connection: HubConnection;
+
+  gameId: GameId;
   playerId: PlayerId;
   state: ClientState = new JoinGame();
 
-  constructor(readonly clientService: ClientService) { }
+  onAnswer(answer: Answer): void {
+    if (answer instanceof SingleAnswerQuestionAnswer) {
+      this.connection.send(
+        "ProvideSingleAnswer",
+        this.gameId,
+        this.playerId,
+        answer.optionId);
+    }
+  }
 
-  ngOnInit() {
-    this.clientService.onNewState((newState) => {
-      if (newState.type === "NotEnoughPlayers") {
-        this.state = new NotEnoughPlayers();
-      }
-    });
-
-    this.clientService.onNewPlayer((playerId) => {
-      this.playerId = playerId;
-    });
+  provideSingleAnswer(gameId: GameId, playerId: PlayerId, optionId: OptionId): void {
+    
   }
 
   joinLatestGame(): void {
     if (this.state instanceof JoinGame) {
-      this.clientService.join(this.state.availableGameId, "Philip");
+      this.connection = new HubConnectionBuilder()
+        .withUrl("/hub")
+        .build();
+
+      this.connection.on("newState", (newState: ClientStateContract) => {
+        switch (newState.type) {
+          case "NotEnoughPlayers":
+            this.state = new NotEnoughPlayers();
+            break;
+
+          case "SingleAnswerQuestion":
+            this.state = new SingleAnswerQuestion(newState.options.map(option => new Option(option.id, option.text)))
+            break;
+        }
+      });
+
+      this.connection.on("newPlayer", (playerId: PlayerId) => {
+        this.playerId = playerId;
+      });
+
+      var gameIdToJoin = this.state.availableGameId;
+      this.connection.start().catch(err => document.write(err)).then(() => {
+        this.connection.send("join", gameIdToJoin, "Philip").then(() => {
+          this.gameId = gameIdToJoin;
+        });
+      });
     }
   }
 
@@ -45,9 +76,17 @@ export class ClientComponent implements OnInit {
   isNotEnoughPlayers(): boolean {
     return this.state instanceof NotEnoughPlayers;
   }
+
+  isQuestion(): boolean {
+    return this.state instanceof SingleAnswerQuestion;
+  }
 }
 
-type ClientState = JoinGame | NotEnoughPlayers;
+export type Question = SingleAnswerQuestion;
+
+export type Answer = SingleAnswerQuestionAnswer;
+
+type ClientState = JoinGame | NotEnoughPlayers | Question;
 
 class JoinGame {
   constructor() { }
@@ -56,7 +95,6 @@ class JoinGame {
     return ClientComponent.availableGameId;
   }
 }
-
 
 class NotEnoughPlayers {
   constructor() {}

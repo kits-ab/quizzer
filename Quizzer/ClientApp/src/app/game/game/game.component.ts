@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AnsweredQuestion } from '../answered-question';
 import { SingleAnswerAnsweredQuestion, SingleAnswerQuestionAnswer } from '../single-answer-answered-question/single-answer-answered-question.component';
 import { MultipleAnswerAnsweredQuestion, MultipleAnswerQuestionAnswer } from '../multiple-answer-answered-question/multiple-answer-answered-question.component';
-import { PlayerService } from '../player.service';
-import { Option } from '../option';
 import { GameService } from '../game.service';
-import { GameId } from 'app/common/IdTypes';
-
+import { GameId } from '../../common/IdTypes';
+import { Option } from '../../common/Option';
 
 @Component({
   selector: 'app-game',
@@ -18,52 +16,42 @@ export class GameComponent implements OnInit {
   gameId: GameId;
   currentState: GameState;
 
-  constructor(readonly playerService: PlayerService, readonly gameService: GameService) { }
+  constructor(readonly gameService: GameService) { }
 
   ngOnInit(): void {
-    this.currentState = new ActiveQuestion(this.playerService.getPlayer("1337").name, "What is my favorite color?C");
-
     this.gameService.onNewState((newState) => {
-      if (newState.type === "NotEnoughPlayers") {
-        this.currentState = new NotEnoughPlayers(newState.numberOfMorePlayersRequired);
-      }
-      else if (newState.type === "ActiveQuestion") {
-        this.currentState = new ActiveQuestion(
-          this.playerService.getPlayer(newState.targetPlayerId).name,
-          newState.text);
-      }
-      else if (newState.type === "SingleAnswerAnsweredQuestion") {
-        this.currentState = new SingleAnswerAnsweredQuestion(
-          newState.targetPlayerId,
-          newState.text,
-          newState.options.map(option => new Option(option.text, option.id)),
-          newState.answers.map(answer => new SingleAnswerQuestionAnswer(answer.optionId, answer.playerId))
-        );
-      }
-      else if (newState.type === "MultipleAnswerAnsweredQuestion") {
-        this.currentState = new MultipleAnswerAnsweredQuestion(
-          newState.targetPlayerId,
-          newState.text,
-          newState.options.map(option => new Option(option.text, option.id)),
-          newState.answers.map(answer => new MultipleAnswerQuestionAnswer(answer.optionIds, answer.playerId))
-        );
+      switch (newState.type) {
+        case "NotEnoughPlayers":
+          this.currentState = new NotEnoughPlayers(newState.numberOfMorePlayersRequired);
+          break;
+
+        case "ActiveQuestion":
+          this.currentState = new ActiveQuestion(
+            newState.targetPlayerName,
+            newState.text);
+          break;
+
+        case "SingleAnswerAnsweredQuestion":
+          this.currentState = new SingleAnswerAnsweredQuestion(
+            newState.targetPlayerName,
+            newState.targetPlayerAnswerOptionId,
+            newState.text,
+            newState.options.map(option => new Option(option.id, option.text)),
+            newState.otherPlayerAnswers.map(answer => new SingleAnswerQuestionAnswer(answer.optionId, answer.playerId))
+          );
+          break;
+
+        case "MultipleAnswerAnsweredQuestion":
+          this.currentState = new MultipleAnswerAnsweredQuestion(
+            newState.targetPlayerName,
+            newState.targetPlayerAnswerOptionIds,
+            newState.text,
+            newState.options.map(option => new Option(option.id, option.text)),
+            newState.otherPlayerAnswers.map(answer => new MultipleAnswerQuestionAnswer(answer.optionIds, answer.playerId))
+          );
+          break;
       }
     });
-  }
-
-  tempMock() {
-    if (this.currentState instanceof ActiveQuestion) {
-      this.currentState = new SingleAnswerAnsweredQuestion("1337",
-        "Still same text?C",
-        [new Option("Blue", "2"), new Option("Green", "1")],
-        [new SingleAnswerQuestionAnswer("1", "1337"), new SingleAnswerQuestionAnswer("2", "1338")]);
-    }
-    else if (this.currentState instanceof SingleAnswerAnsweredQuestion) {
-      this.currentState = new MultipleAnswerAnsweredQuestion("1337",
-        "Still same text?C",
-        [new Option("Blue", "2"), new Option("Green", "1"), new Option("Red", "0")],
-        [new MultipleAnswerQuestionAnswer(["1", "2"], "1337"), new MultipleAnswerQuestionAnswer(["2", "0"], "1338")]);
-    }
   }
 
   hasGameId(): boolean {

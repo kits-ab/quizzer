@@ -6,5 +6,4 @@
 
 <app-answered-question *ngIf="isAnsweredQuestion()" [question]="currentState"></app-answered-question>
 
-<button (click)="tempMock()">Tamp mock</button>
 <button *ngIf="!hasGameId()" (click)="create()">Create game</button>

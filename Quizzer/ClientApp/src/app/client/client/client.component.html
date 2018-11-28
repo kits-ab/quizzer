@@ -3,3 +3,5 @@
 <button *ngIf="isJoinGame()" (click)="joinLatestGame()">Join {{state.availableGameId}}</button>
 
 <div *ngIf="isNotEnoughPlayers()">Waiting for more players to join...</div>
+
+<app-question *ngIf="isQuestion()" [question]="this.state" (newAnswer)="onAnswer($event)"></app-question>

@@ -2,7 +2,6 @@ import { Component, Input, OnChanges, SimpleChanges, SimpleChange } from '@angul
 import { SingleAnswerAnsweredQuestion } from '../single-answer-answered-question/single-answer-answered-question.component';
 import { MultipleAnswerAnsweredQuestion } from '../multiple-answer-answered-question/multiple-answer-answered-question.component';
 import { AnsweredQuestion } from '../answered-question';
-import { PlayerService } from '../player.service';
 
 @Component({
   selector: 'app-answered-question',
@@ -16,11 +15,8 @@ export class AnsweredQuestionComponent implements OnChanges {
 
   targetPlayerName: string;
 
-  constructor(readonly playerService: PlayerService) { }
-
   ngOnChanges(changes: SimpleChanges): void {
-    const targetPlayer = this.playerService.getPlayer(this.question.targetPlayerId);
-    this.targetPlayerName = targetPlayer.name;
+    this.targetPlayerName = this.question.targetPlayerName;
   }
 
   isSingleAnswer(): boolean {

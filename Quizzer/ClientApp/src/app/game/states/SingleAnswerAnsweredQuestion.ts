@@ -2,16 +2,17 @@
 export interface SingleAnswerAnsweredQuestion {
   type: 'SingleAnswerAnsweredQuestion';
   
-  targetPlayerId: string;
+  targetPlayerName: string;
+  targetPlayerAnswerOptionId: string;
   text: string;
   options: Option[];
-  answers: Answer[];
+  otherPlayerAnswers: Answer[];
 }
 
 interface Option {
   
-  text: string;
   id: string;
+  text: string;
 }
 
 interface Answer {

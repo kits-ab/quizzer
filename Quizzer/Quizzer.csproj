@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\client\client.service.ts" />
+    <None Remove="ClientApp\src\app\client\ClientState.ts" />
     <None Remove="ClientApp\src\app\common\IdTypes.ts" />
     <None Remove="ClientApp\src\app\game\answer.ts" />
     <None Remove="ClientApp\src\app\game\answered-question.ts" />
@@ -38,17 +38,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\client\client.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\client\ClientState.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\IdTypes.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\game\answer.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\game\answered-question.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\game\option.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\Option.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\game\game.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="ClientApp\src\app\client\states\NotEnoughPlayers.ts">
       <CustomToolNamespace>Services\Client\States\NotEnoughPlayers.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\client\states\SingleAnswerQuestion.ts">
+      <CustomToolNamespace>Services\Client\States\SingleAnswerQuestion.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\game\states\ActiveQuestion.ts">
       <CustomToolNamespace>Services\Game\States\ActiveQuestion.cs</CustomToolNamespace>

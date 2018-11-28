@@ -2,7 +2,7 @@
 export interface ActiveQuestion {
   type: 'ActiveQuestion';
   
-  targetPlayerId: string;
+  targetPlayerName: string;
   text: string;
 }
 

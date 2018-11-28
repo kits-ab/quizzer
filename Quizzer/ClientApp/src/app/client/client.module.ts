@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
 
-import { ClientService } from './client.service';
 import { ClientComponent } from './client/client.component';
+import { SingleAnswerQuestionComponent } from './single-answer-question/single-answer-question.component';
+import { QuestionComponent } from './question/question.component';
 
 @NgModule({
   declarations: [
-    ClientComponent
+    ClientComponent,
+    SingleAnswerQuestionComponent,
+    QuestionComponent
   ],
   imports: [
     CommonModule
@@ -15,7 +18,6 @@ import { ClientComponent } from './client/client.component';
     ClientComponent
   ],
   providers: [
-    ClientService
   ]
 })
 export class ClientModule { }
