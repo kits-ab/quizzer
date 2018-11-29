@@ -28,7 +28,7 @@ namespace Quizzer.Services.Client
             {
                 var singleQuestion = ((DomainTypes.Question.SingleAnswerQuestion) question).Item;
 
-                return new SingleAnswerQuestion(singleQuestion.Options.Select(pair => new SingleAnswerQuestion.Option(pair.Key.Item, pair.Value.Text)));
+                return new SingleAnswerQuestion(singleQuestion.Options.Select(pair => new SingleAnswerQuestion.Option(pair.Item1.Item, pair.Item2.Text)));
             }
 
             return null;

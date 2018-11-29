@@ -14,17 +14,12 @@
           <ul class='nav navbar-nav'>
             <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
               <a [routerLink]='["/"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-home'></span> Game with two clients
+                <span class='glyphicon glyphicon-home'></span> Create game with two clients
               </a>
             </li>
             <li [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/game"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-th-list'></span> Game
-              </a>
-            </li>
-            <li [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/client"]' (click)='collapse()'>
-                <span class='glyphicon glyphicon-th-list'></span> Client
+              <a [routerLink]='["/game/create"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-home'></span> Create game
               </a>
             </li>
             <li [routerLinkActive]='["link-active"]'>

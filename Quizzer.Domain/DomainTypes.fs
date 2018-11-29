@@ -9,7 +9,7 @@ module DomainTypes =
         OptionId : OptionId }
 
     type MultipleAnswer = {
-        OptionIds : seq<OptionId> }
+        OptionIds : List<OptionId> }
 
     type Answer =
     | SingleAnswer of SingleAnswer
@@ -17,11 +17,11 @@ module DomainTypes =
 
     type SingleAnswerQuestion = {
         Text : string
-        Options : Map<OptionId, Option> }
+        Options : List<OptionId * Option> }
 
     type MultipleAnswerQuestion = {
         Text : string
-        Options : Map<OptionId, Option> }
+        Options : List<OptionId * Option> }
 
     type Question =
     | SingleAnswerQuestion of SingleAnswerQuestion
@@ -30,7 +30,7 @@ module DomainTypes =
     type Player = { Name : string }
 
     type Game = {
-        Questions : seq<QuestionId * Question>
+        Questions : List<QuestionId * Question>
         CurrentQuestionId : Option<QuestionId>
         CurrentQuestionAnswers : Map<PlayerId, Answer>
         Players : Map<PlayerId, Player>

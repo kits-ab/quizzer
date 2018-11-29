@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { GameId } from '../../common/IdTypes';
 
 @Component({
-  selector: 'app-game-test',
-  templateUrl: './game-test.component.html',
-  styleUrls: ['./game-test.component.css']
+  selector: 'app-game-view',
+  templateUrl: './game-view.component.html',
+  styleUrls: ['./game-view.component.css']
 })
-export class GameTestComponent implements OnInit {
+export class GameViewComponent implements OnInit {
 
   gameId: GameId;
 

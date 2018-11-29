@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AnsweredQuestion } from '../answered-question';
 import { SingleAnswerAnsweredQuestion, SingleAnswerQuestionAnswer } from '../single-answer-answered-question/single-answer-answered-question.component';
 import { MultipleAnswerAnsweredQuestion, MultipleAnswerQuestionAnswer } from '../multiple-answer-answered-question/multiple-answer-answered-question.component';
@@ -13,7 +13,7 @@ import { Option } from '../../common/Option';
 })
 export class GameComponent implements OnInit {
 
-  gameId: GameId;
+  @Input() gameId: GameId;
   currentState: GameState;
 
   constructor(readonly gameService: GameService) { }
@@ -51,16 +51,6 @@ export class GameComponent implements OnInit {
           );
           break;
       }
-    });
-  }
-
-  hasGameId(): boolean {
-    return this.gameId != null;
-  }
-
-  create(): void {
-    this.gameService.create((newGameId) => {
-      this.gameId = newGameId;
     });
   }
 

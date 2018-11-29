@@ -1,4 +1,4 @@
-<div *ngIf="hasGameId()">Game ID: {{gameId}}</div>
+<div>Game ID: {{gameId}}</div>
 
 <div *ngIf="isNotEnoughPlayers()">Waiting for {{currentState.numberOfMorePlayersRequired}} more players...</div>
 
@@ -6,4 +6,4 @@
 
 <app-answered-question *ngIf="isAnsweredQuestion()" [question]="currentState"></app-answered-question>
 
-<button *ngIf="!hasGameId()" (click)="create()">Create game</button>
+<div>Join game using QR-code <img src="/api/Game/{{gameId}}/Join" alt="Join game using this QR code" /> or copying <a href="client/{{gameId}}">this link</a></div>

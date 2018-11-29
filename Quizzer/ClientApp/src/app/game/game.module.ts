@@ -7,6 +7,9 @@ import { AnsweredQuestionComponent } from './answered-question/answered-question
 import { SingleAnswerAnsweredQuestionComponent } from './single-answer-answered-question/single-answer-answered-question.component';
 import { MultipleAnswerAnsweredQuestionComponent } from './multiple-answer-answered-question/multiple-answer-answered-question.component';
 import { GameService } from './game.service';
+import { GameCreatorComponent } from './game-creator/game-creator.component';
+import { GameViewComponent } from './game-view/game-view.component';
+import { GameTestCreatorComponent } from './game-test-creator/game-test-creator.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { GameService } from './game.service';
     GameComponent,
     AnsweredQuestionComponent,
     SingleAnswerAnsweredQuestionComponent,
-    MultipleAnswerAnsweredQuestionComponent
+    MultipleAnswerAnsweredQuestionComponent,
+    GameCreatorComponent,
+    GameViewComponent,
+    GameTestCreatorComponent,
   ],
   imports: [
     CommonModule

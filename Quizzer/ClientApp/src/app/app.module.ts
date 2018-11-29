@@ -12,8 +12,10 @@ import { HomeComponent } from './temp/home/home.component';
 import { CounterComponent } from './temp/counter/counter.component';
 import { FetchDataComponent } from './temp/fetch-data/fetch-data.component';
 import { GameTestComponent } from './temp/game-test/game-test.component';
-import { GameComponent } from './game/game/game.component';
-import { ClientComponent } from './client/client/client.component';
+import { GameCreatorComponent } from './game/game-creator/game-creator.component';
+import { GameViewComponent } from './game/game-view/game-view.component';
+import { ClientViewComponent } from './client/client-view/client-view.component';
+import { GameTestCreatorComponent } from './game/game-test-creator/game-test-creator.component';
 
 @NgModule({
   declarations: [
@@ -31,9 +33,11 @@ import { ClientComponent } from './client/client/client.component';
     GameModule,
     ClientModule,
     RouterModule.forRoot([
-      { path: '', component: GameTestComponent, pathMatch: 'full' },
-      { path: 'game', component: GameComponent },
-      { path: 'client', component: ClientComponent },
+      { path: '', component: GameTestCreatorComponent, pathMatch: 'full' },
+      { path: 'gameTest/:gameId', component: GameTestComponent },
+      { path: 'game/create', component: GameCreatorComponent },
+      { path: 'game/:gameId', component: GameViewComponent },
+      { path: 'client/:gameId', component: ClientViewComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])

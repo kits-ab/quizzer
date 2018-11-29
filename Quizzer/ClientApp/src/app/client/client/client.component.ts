@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from "@aspnet/signalr";
 import { GameId, PlayerId, OptionId } from "../../common/IdTypes";
 import { ClientState as ClientStateContract } from "../ClientState";
@@ -10,15 +10,42 @@ import { Option } from '../../common/Option';
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.css']
 })
-export class ClientComponent {
-
-  static availableGameId: GameId;
+export class ClientComponent implements OnInit {
 
   private connection: HubConnection;
 
-  gameId: GameId;
+  @Input() gameId: GameId;
   playerId: PlayerId;
-  state: ClientState = new JoinGame();
+  state: ClientState;
+
+  ngOnInit(): void {
+    this.connection = new HubConnectionBuilder()
+      .withUrl("/hub")
+      .build();
+
+    this.connection.on("newState", (newState: ClientStateContract) => {
+      switch (newState.type) {
+        case "NotEnoughPlayers":
+          this.state = new NotEnoughPlayers();
+          break;
+
+        case "SingleAnswerQuestion":
+          this.state = new SingleAnswerQuestion(newState.options.map(option => new Option(option.id, option.text)))
+          break;
+      }
+    });
+
+    this.connection.on("newPlayer", (playerId: PlayerId) => {
+      this.playerId = playerId;
+    });
+
+    //var gameIdToJoin = this.gameId;
+    this.connection.start().catch(err => document.write(err)).then(() => {
+      this.connection.send("join", this.gameId, "Philip").then(() => {
+        this.gameId = this.gameId;
+      });
+    });
+  }
 
   onAnswer(answer: Answer): void {
     if (answer instanceof SingleAnswerQuestionAnswer) {
@@ -30,47 +57,8 @@ export class ClientComponent {
     }
   }
 
-  provideSingleAnswer(gameId: GameId, playerId: PlayerId, optionId: OptionId): void {
-    
-  }
-
-  joinLatestGame(): void {
-    if (this.state instanceof JoinGame) {
-      this.connection = new HubConnectionBuilder()
-        .withUrl("/hub")
-        .build();
-
-      this.connection.on("newState", (newState: ClientStateContract) => {
-        switch (newState.type) {
-          case "NotEnoughPlayers":
-            this.state = new NotEnoughPlayers();
-            break;
-
-          case "SingleAnswerQuestion":
-            this.state = new SingleAnswerQuestion(newState.options.map(option => new Option(option.id, option.text)))
-            break;
-        }
-      });
-
-      this.connection.on("newPlayer", (playerId: PlayerId) => {
-        this.playerId = playerId;
-      });
-
-      var gameIdToJoin = this.state.availableGameId;
-      this.connection.start().catch(err => document.write(err)).then(() => {
-        this.connection.send("join", gameIdToJoin, "Philip").then(() => {
-          this.gameId = gameIdToJoin;
-        });
-      });
-    }
-  }
-
   hasPlayerId(): boolean {
     return this.playerId != null;
-  }
-
-  isJoinGame(): boolean {
-    return this.state instanceof JoinGame;
   }
 
   isNotEnoughPlayers(): boolean {
@@ -86,15 +74,7 @@ export type Question = SingleAnswerQuestion;
 
 export type Answer = SingleAnswerQuestionAnswer;
 
-type ClientState = JoinGame | NotEnoughPlayers | Question;
-
-class JoinGame {
-  constructor() { }
-
-  get availableGameId(): GameId {
-    return ClientComponent.availableGameId;
-  }
-}
+type ClientState = NotEnoughPlayers | Question;
 
 class NotEnoughPlayers {
   constructor() {}

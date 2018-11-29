@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { GameId } from '../../common/IdTypes';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-game-test',
-  templateUrl: './game-test.component.html',
-  styleUrls: ['./game-test.component.css']
+  selector: 'app-client-view',
+  templateUrl: './client-view.component.html',
+  styleUrls: ['./client-view.component.css']
 })
-export class GameTestComponent implements OnInit {
+export class ClientViewComponent implements OnInit {
 
   gameId: GameId;
 

@@ -5,7 +5,6 @@ import { SingleAnswerAnsweredQuestion } from './states/SingleAnswerAnsweredQuest
 import { MultipleAnswerAnsweredQuestion } from './states/MultipleAnswerAnsweredQuestion';
 import { NotEnoughPlayers } from './states/NotEnoughPlayers';
 import { GameId } from '../common/IdTypes';
-import { ClientComponent } from '../client/client/client.component';
 
 @Injectable()
 export class GameService {
@@ -23,7 +22,6 @@ export class GameService {
     this.connection.on("newGame", (newGameId: GameId) => {
       for (let i = 0; i < this.gameCreatedHandlers.length; i++) {
         this.gameCreatedHandlers[i](newGameId);
-        ClientComponent.availableGameId = newGameId;
       }
     });
 

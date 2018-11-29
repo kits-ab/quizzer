@@ -5,11 +5,11 @@ module GameBuilder =
         match game.CurrentQuestionId with 
         | None -> {
             game with
-                Questions = Seq.append game.Questions (Seq.singleton (newQuestionId, newQuestion))
+                Questions = Seq.toList (Seq.append game.Questions (Seq.singleton (newQuestionId, newQuestion)))
                 CurrentQuestionId = Some newQuestionId }
         | _ -> {
             game with
-                Questions = Seq.append game.Questions (Seq.singleton (newQuestionId, newQuestion)) }
+                Questions = Seq.toList (Seq.append game.Questions (Seq.singleton (newQuestionId, newQuestion))) }
 
     let private addPlayer (game, newPlayerId, newPlayerName) = 
         match game.TargetPlayerId with 

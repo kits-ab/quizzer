@@ -2,7 +2,7 @@
 
 type SingleAnswerQuestionAnswerEventData = { OptionId : OptionId }
 
-type MultipleAnswerQuestionAnswerEventData = { OptionIds : seq<OptionId> }
+type MultipleAnswerQuestionAnswerEventData = { OptionIds : List<OptionId> }
 
 type AnswerEventData =
     | SingleAnswerQuestionAnswerEventData of SingleAnswerQuestionAnswerEventData
