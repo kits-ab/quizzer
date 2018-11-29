@@ -11,8 +11,8 @@ export interface MultipleAnswerAnsweredQuestion {
 
 interface Option {
   
-  text: string;
   id: string;
+  text: string;
 }
 
 interface Answer {

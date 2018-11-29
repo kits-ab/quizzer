@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.DependencyInjection;
 using Quizzer.Hubs;
+using Quizzer.ReadModel.Client;
+using Quizzer.ReadModel.Game;
 using Quizzer.Services;
 using Quizzer.Services.Client;
 using Quizzer.Services.Game;
@@ -24,11 +26,16 @@ namespace Quizzer
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddTransient<GameBuilder>();
-            services.AddTransient<GameRepository>();
+            services.AddTransient<ClientStateReadModel>();
+            services.AddTransient<GameStateReadModel>();
+            services.AddTransient<ReadModel.Client.StateEntityToDtoConverter>();
+            services.AddTransient<ReadModel.Game.StateEntityToDtoConverter>();
             services.AddTransient<GameStateDenormalizer>();
             services.AddTransient<ClientStateDenormalizer>();
+            services.AddTransient<GameBuilder>();
+            services.AddTransient<GameRepository>();
             services.AddSingleton<EventStore>();
+            services.AddTransient<CommandHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

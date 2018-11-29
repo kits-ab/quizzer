@@ -15,7 +15,7 @@ namespace Quizzer.Services.Game
             this.gameRepository = gameRepository;
         }
 
-        public object GetState(GameId gameId)
+        public State GetState(GameId gameId)
         {
             var game = gameRepository.GetById(gameId);
             var acceptingAnswersResult = Domain.Game.isAcceptingAnswers(game);

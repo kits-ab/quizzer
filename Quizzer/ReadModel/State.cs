@@ -1,4 +1,4 @@
-﻿namespace Quizzer.Services
+﻿namespace Quizzer.ReadModel
 {
     public abstract class State
     {

@@ -1,4 +1,4 @@
-﻿namespace Quizzer.Services.Game.States
+﻿namespace Quizzer.ReadModel.Game.States
 {
     public class ActiveQuestion : State
     {
@@ -10,10 +10,5 @@
 
         public string TargetPlayerName { get; }
         public string Text { get; }
-
-        public override T Accept<T>(StateVisitor<T> visitor)
-        {
-            return visitor.Visit(this);
-        }
     }
 }

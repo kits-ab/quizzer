@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Quizzer.Services.Game.States
+namespace Quizzer.ReadModel.Game.States
 {
-    public class SingleAnswerAnsweredQuestion : State
+    public class MultipleAnswerAnsweredQuestion : State
     {
-        public SingleAnswerAnsweredQuestion(string targetPlayerName, Guid targetPlayerAnswerOptionId, string text, IEnumerable<Option> options, IEnumerable<Answer> otherPlayerAnswers)
+        public MultipleAnswerAnsweredQuestion(Guid targetPlayerName, IEnumerable<Guid> targetPlayerAnswerOptionIds, string text, IEnumerable<Option> options, IEnumerable<Answer> otherPlayerAnswers)
         {
             TargetPlayerName = targetPlayerName;
-            TargetPlayerAnswerOptionId = targetPlayerAnswerOptionId;
+            TargetPlayerAnswerOptionIds = targetPlayerAnswerOptionIds;
             Text = text;
             Options = options;
             OtherPlayerAnswers = otherPlayerAnswers;
         }
 
-        public string TargetPlayerName { get; }
-        public Guid TargetPlayerAnswerOptionId { get; }
-    
+        public Guid TargetPlayerName { get; }
+        public IEnumerable<Guid> TargetPlayerAnswerOptionIds { get; }
+
         public string Text { get; }
         public IEnumerable<Option> Options { get; }
         public IEnumerable<Answer> OtherPlayerAnswers { get; }
@@ -35,19 +35,14 @@ namespace Quizzer.Services.Game.States
 
         public class Answer
         {
-            public Answer(Guid optionId, Guid playerId)
+            public Answer(IEnumerable<Guid> optionIds, Guid playerId)
             {
-                OptionId = optionId;
+                OptionIds = optionIds;
                 PlayerId = playerId;
             }
 
-            public Guid OptionId { get; }
+            public IEnumerable<Guid> OptionIds { get; }
             public Guid PlayerId { get; }
-        }
-
-        public override T Accept<T>(StateVisitor<T> visitor)
-        {
-            return visitor.Visit(this);
         }
     }
 }

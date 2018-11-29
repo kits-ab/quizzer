@@ -1,4 +1,4 @@
-﻿namespace Quizzer.Services.Game.States
+﻿namespace Quizzer.ReadModel.Game.States
 {
     public class NotEnoughPlayers : State
     {
@@ -8,10 +8,5 @@
         }
 
         public int NumberOfMorePlayersRequired { get; }
-
-        public override T Accept<T>(StateVisitor<T> visitor)
-        {
-            return visitor.Visit(this);
-        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Quizzer.Services.Game.States
+namespace Quizzer.ReadModel.Game.States
 {
     public class SingleAnswerAnsweredQuestion : State
     {
@@ -43,11 +43,6 @@ namespace Quizzer.Services.Game.States
 
             public Guid OptionId { get; }
             public Guid PlayerId { get; }
-        }
-
-        public override T Accept<T>(StateVisitor<T> visitor)
-        {
-            return visitor.Visit(this);
         }
     }
 }

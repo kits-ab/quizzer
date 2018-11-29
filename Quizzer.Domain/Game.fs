@@ -29,8 +29,8 @@ module Game =
         QuestionId = QuestionId(Guid.NewGuid())
         Question = question }
 
-    let join (newPlayerName) = PlayerJoinedEvent { 
-        PlayerId = PlayerId(Guid.NewGuid())
+    let join (newPlayerId, newPlayerName) = PlayerJoinedEvent { 
+        PlayerId = newPlayerId
         PlayerName = newPlayerName }
 
     let leave (playerId) = PlayerLeftEvent {
