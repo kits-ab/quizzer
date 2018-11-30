@@ -16,7 +16,7 @@ module Game =
         | None -> None
 
     let nextQuestionId game = 
-        match (Seq.tryItem 0 (Seq.skip 1 (Seq.skipWhile (fun (questionId, _) -> Some questionId = game.CurrentQuestionId) game.Questions))) with
+        match (Seq.tryItem 0 (Seq.skip 1 (Seq.skipWhile (fun (questionId, _) -> not (Some questionId = game.CurrentQuestionId)) game.Questions))) with
         | Some (questionId, _) -> Some questionId
         | None -> None
 

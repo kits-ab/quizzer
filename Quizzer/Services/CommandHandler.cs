@@ -18,8 +18,8 @@ namespace Quizzer.Services
         {
             var gameId = GameId.NewGameId(command.GameId);
             eventStore.Add(gameId, Domain.Game.addQuestion(SingleAnswerQuestion.create("What is my favorite color?", new[] { "Red", "Green", "Blue" })));
-            eventStore.Add(gameId, Domain.Game.addQuestion(SingleAnswerQuestion.create("Am I blue?", new[] { "Yes", "No" })));
-            eventStore.Add(gameId, Domain.Game.addQuestion(SingleAnswerQuestion.create("Question?", new[] { "Yes", "No" })));
+            eventStore.Add(gameId, Domain.Game.addQuestion(SingleAnswerQuestion.create("Which is my favorite animal?", new[] { "Dog", "Cat", "Alligator", "Snail" })));
+            eventStore.Add(gameId, Domain.Game.addQuestion(SingleAnswerQuestion.create("Do I believe the cake is a lie?", new[] { "Yes", "No" })));
             eventStore.Add(gameId, Domain.Game.addQuestion(MultipleAnswerQuestion.create("What are my favorite colors?", new[] { "Red", "Green", "Blue", "Yellow" })));
         }
 
